@@ -11,6 +11,7 @@ library(tidyverse)
 
 sort_by <- "y2015"       # "y2015" (starting level) or "change" (size of change)
 thr <- 3                 # changes smaller than this (points) = "about the same"
+study_dir <- "studies/reading-change-2015-2025"   # where figures are saved
 save_outputs <- FALSE    # TRUE = also write the PNG/SVG and the notes file
 arrow_style <- "open"    # "filled" | "open" | "dots" | "gap"  (see make_arrow below)
 end_gap <- 4             # only for arrow_style "gap": gap (score points) before the 2025 dot
@@ -231,11 +232,11 @@ p <- ggplot(d) +
 
 # --- 6. Save (only when save_outputs <- TRUE) --------------------------------
 if (save_outputs) {
-  dir.create("outputs", showWarnings = FALSE)
+  dir.create(file.path(study_dir, "figures"), recursive = TRUE, showWarnings = FALSE)
   if (font_ok) showtext::showtext_opts(dpi = 300)   # match the export resolution
-  ggsave("outputs/arrows_reading_2015_2025.png", p, width = 8, height = 16 * H / n,
+  ggsave(file.path(study_dir, "figures", "arrows_reading_2015_2025.png"), p, width = 8, height = 16 * H / n,
          dpi = 300, bg = bg_col)
-  try(ggsave("outputs/arrows_reading_2015_2025.svg", p, width = 8, height = 16),
+  try(ggsave(file.path(study_dir, "figures", "arrows_reading_2015_2025.svg"), p, width = 8, height = 16 * H / n),
       silent = TRUE)
   if (font_ok) showtext::showtext_opts(dpi = 96)    # back to screen resolution
 
@@ -271,7 +272,7 @@ if (save_outputs) {
     "## Source and credit",
     "OECD, PISA 2015 and PISA 2025 student data files. Analysis and chart: Ekaterina Enchikova (ORCID 0000-0002-3919-2447)."
   )
-  writeLines(notes, "outputs/arrows_reading_notes.md")
+  writeLines(notes, file.path(study_dir, "figures", "arrows_reading_notes.md"))
 }
 
 p

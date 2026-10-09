@@ -1,45 +1,27 @@
-# Change in reading performance, PISA 2015–2025
+# Analysis and Visualisations of PISA 2025 Results
 
-Analysis and visualisations of PISA 2025 results, with a first chart comparing mean reading scores in PISA 2015 and PISA 2025.
+Exploratory analysis and data visualisation of the OECD's Programme for International Student Assessment (PISA) 2025, using R.
 
-![Change in reading performance, PISA 2015–2025](outputs/arrows_reading_2015_2025.png)
+**Status:** work in progress. New studies are added as separate folders under `studies/`.
 
-*Each arrow runs from a country's mean reading score in 2015 (dot) to its score in 2025 (arrowhead). Orange = lower in 2025, green = higher, blue = about the same (under 3 points). Larger changes get larger arrowheads and larger names.*
+## Studies
 
-## Key points
-
-- **55 of 63 countries and economies** scored lower in reading in 2025 than in 2015 (by 3+ points).
-- The **median change** across countries was **−19 points**.
-- Countries are sorted by their 2015 score (highest at the top). † marks countries where the represented 15-year-old population changed by 25% or more (demography and/or coverage), so the change should be read with caution.
-
-## Important caveats
-
-- **Point estimates only.** Colours and sizes reflect the size of the difference between point estimates. Statistical significance (standard errors from the 80 replicate weights, plus link error between cycles) has **not** been tested yet.
-- Only countries with the **same sample code in both cycles** are shown (for example, China's 2015 sample B-S-J-G and 2025 sample B-S-J-Z are not comparable and are excluded). Uzbekistan has no 2025 reading score.
-- 2025 means were checked against the OECD's published PISA 2025 reading table.
-
-## Method
-
-Weighted country means (final student weight `W_FSTUWT`), computed separately for each of the 10 plausible values and then averaged.
-
-## Repository structure
-
-| File | Purpose |
+| Study | Description |
 |---|---|
-| `R/03_build_slim_data.R` | Reads only the needed columns from the PISA 2015 and 2025 SPSS files and saves slim `.rds` files |
-| `R/04_country_means_2015_2025.R` | Computes weighted country means (reading, mathematics, science) and changes |
-| `R/06_dumbbell_reading.R` | Builds the arrow chart (set `save_outputs <- TRUE` to write PNG/SVG and notes) |
-| `R/01_…`, `R/02_…` | Early starter scripts |
-| `outputs/` | Country means (CSV), final chart (PNG, SVG) and chart notes |
+| [Change in reading performance, PISA 2015–2025](studies/reading-change-2015-2025/) | Arrow chart of the change in mean reading scores across 63 countries and economies |
 
-## Reproduce
+## Structure
 
-1. Download the student files from the OECD (PISA 2015 `CY6_MS_CMB_STU_QQQ.sav`, PISA 2025 `CY09_MS_STU_PUF.sav`) into `data/` (git-ignored; raw data is not included in this repository).
-2. Run `R/03_build_slim_data.R`, then `R/04_country_means_2015_2025.R`, then `R/06_dumbbell_reading.R`.
+- `R/` shared steps (reading the PISA files, computing weighted country means)
+- `outputs/` shared derived data
+- `studies/<study-name>/` one folder per study: its own README, script and figures
+- `data/` raw OECD files (git-ignored, not in this repository)
 
-R packages: `tidyverse`, `haven`, `showtext`, `sysfonts`, `scales`.
+## Aims
 
-## Source and credit
+- Explore PISA 2025 student performance (reading, mathematics, science) across countries and economies.
+- Practise careful handling of PISA's complex survey design (sampling weights, plausible values, replicate weights).
+- Build clear, publication-quality graphics with R and ggplot2.
 
-OECD, PISA 2015 and PISA 2025 student data.
-Analysis and chart: [Ekaterina Enchikova](https://orcid.org/0000-0002-3919-2447) · [LinkedIn](https://www.linkedin.com/in/enchikova) · [GitHub](https://github.com/enchikova)
+Author: [Ekaterina Enchikova](https://orcid.org/0000-0002-3919-2447) · [LinkedIn](https://www.linkedin.com/in/enchikova) · [GitHub](https://github.com/enchikova)
+
